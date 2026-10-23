@@ -8,9 +8,9 @@
 
 **Purpose**: Create the minimal ASP.NET Core API and Blazor WebAssembly structure required for the MVP.
 
-- [ ] T001 Create the required project folders and solution layout per the plan in backend/RSSFeedReader.Api, backend/RSSFeedReader.Api.Tests, frontend/RSSFeedReader.UI, and frontend/RSSFeedReader.UI.Tests
-- [ ] T002 [P] Initialize the ASP.NET Core Web API and Blazor WebAssembly projects with the required .NET 10 dependencies in backend/RSSFeedReader.Api and frontend/RSSFeedReader.UI
-- [ ] T003 [P] Configure backend startup, CORS, and frontend API base URL settings in backend/RSSFeedReader.Api/Program.cs and frontend/RSSFeedReader.UI/wwwroot/appsettings.json
+- [X] T001 Create the required project folders and solution layout per the plan in backend/RSSFeedReader.Api, backend/RSSFeedReader.Api.Tests, frontend/RSSFeedReader.UI, and frontend/RSSFeedReader.UI.Tests
+- [X] T002 [P] Initialize the ASP.NET Core Web API and Blazor WebAssembly projects with the required .NET 10 dependencies in backend/RSSFeedReader.Api and frontend/RSSFeedReader.UI
+- [X] T003 [P] Configure backend startup, CORS, and frontend API base URL settings in backend/RSSFeedReader.Api/Program.cs and frontend/RSSFeedReader.UI/wwwroot/appsettings.json
 
 ---
 
@@ -20,10 +20,10 @@
 
 **Checkpoint**: The API can validate input and hold a process-local subscription list before any story-specific UI work starts.
 
-- [ ] T004 Create the `FeedSubscription` model with required URL and timestamp fields in backend/RSSFeedReader.Api/Models/FeedSubscription.cs
-- [ ] T005 [P] Implement the in-memory subscription service with create/list behavior in backend/RSSFeedReader.Api/Services/SubscriptionService.cs
-- [ ] T006 [P] Add URL validation and duplicate detection for nonblank absolute HTTP(S) URLs only in backend/RSSFeedReader.Api/Services/SubscriptionService.cs
-- [ ] T007 Configure API registration and validation pipeline wiring for the backend in backend/RSSFeedReader.Api/Program.cs
+- [X] T004 Create the `FeedSubscription` model with required URL and timestamp fields in backend/RSSFeedReader.Api/Models/FeedSubscription.cs
+- [X] T005 [P] Implement the in-memory subscription service with create/list behavior in backend/RSSFeedReader.Api/Services/SubscriptionService.cs
+- [X] T006 [P] Add URL validation and duplicate detection for nonblank absolute HTTP(S) URLs only in backend/RSSFeedReader.Api/Services/SubscriptionService.cs
+- [X] T007 Configure API registration and validation pipeline wiring for the backend in backend/RSSFeedReader.Api/Program.cs
 
 ---
 
@@ -35,18 +35,18 @@
 
 ### Tests for User Story 1
 
-- [ ] T008 [P] [US1] Add a unit test for valid and invalid URL validation in backend/RSSFeedReader.Api.Tests/SubscriptionServiceTests.cs
-- [ ] T009 [P] [US1] Add API integration tests for successful create and validation failure in backend/RSSFeedReader.Api.Tests/SubscriptionsControllerTests.cs
-- [ ] T010 [P] [US1] Add UI test coverage for the subscription form and inline validation in frontend/RSSFeedReader.UI.Tests/SubscriptionsPageTests.cs
+- [X] T008 [P] [US1] Add a unit test for valid and invalid URL validation in backend/RSSFeedReader.Api.Tests/SubscriptionServiceTests.cs
+- [X] T009 [P] [US1] Add API integration tests for successful create and validation failure in backend/RSSFeedReader.Api.Tests/SubscriptionsControllerTests.cs
+- [X] T010 [P] [US1] Add UI test coverage for the subscription form and inline validation in frontend/RSSFeedReader.UI.Tests/SubscriptionsPageTests.cs
 
 ### Implementation for User Story 1
 
-- [ ] T011 [P] [US1] Implement the subscription request/response models and route contract for the API in backend/RSSFeedReader.Api/Contracts/SubscriptionRequest.cs and backend/RSSFeedReader.Api/Contracts/SubscriptionResponse.cs
-- [ ] T012 [US1] Implement the `GET /api/subscriptions` and `POST /api/subscriptions` endpoints in backend/RSSFeedReader.Api/Controllers/SubscriptionsController.cs
-- [ ] T013 [US1] Add validation and duplicate rejection logic with proper 400/409 responses in backend/RSSFeedReader.Api/Services/SubscriptionService.cs
-- [ ] T014 [US1] Wire the API startup and CORS configuration so the frontend can call the backend in backend/RSSFeedReader.Api/Program.cs
-- [ ] T015 [US1] Build the subscription input form, add action, and success/error feedback in frontend/RSSFeedReader.UI/Pages/Subscriptions.razor
-- [ ] T016 [P] [US1] Implement the frontend API client and load the configured backend URL from frontend/RSSFeedReader.UI/Services/SubscriptionClient.cs and frontend/RSSFeedReader.UI/wwwroot/appsettings.json
+- [X] T011 [P] [US1] Implement the subscription request/response models and route contract for the API in backend/RSSFeedReader.Api/Contracts/SubscriptionRequest.cs and backend/RSSFeedReader.Api/Contracts/SubscriptionResponse.cs
+- [X] T012 [US1] Implement the `GET /api/subscriptions` and `POST /api/subscriptions` endpoints in backend/RSSFeedReader.Api/Controllers/SubscriptionsController.cs
+- [X] T013 [US1] Add validation and duplicate rejection logic with proper 400/409 responses in backend/RSSFeedReader.Api/Services/SubscriptionService.cs
+- [X] T014 [US1] Wire the API startup and CORS configuration so the frontend can call the backend in backend/RSSFeedReader.Api/Program.cs
+- [X] T015 [US1] Build the subscription input form, add action, and success/error feedback in frontend/RSSFeedReader.UI/Pages/Subscriptions.razor
+- [X] T016 [P] [US1] Implement the frontend API client and load the configured backend URL from frontend/RSSFeedReader.UI/Services/SubscriptionClient.cs and frontend/RSSFeedReader.UI/wwwroot/appsettings.json
 
 **Checkpoint**: User Story 1 is functional and independently testable: users can add one valid feed URL and see it appear in the current list.
 
@@ -60,14 +60,14 @@
 
 ### Tests for User Story 2
 
-- [ ] T017 [P] [US2] Add an API test covering the empty list and populated list response in backend/RSSFeedReader.Api.Tests/SubscriptionsControllerTests.cs
-- [ ] T018 [P] [US2] Add a UI test covering list rendering and refresh after a successful add in frontend/RSSFeedReader.UI.Tests/SubscriptionsPageTests.cs
+- [X] T017 [P] [US2] Add an API test covering the empty list and populated list response in backend/RSSFeedReader.Api.Tests/SubscriptionsControllerTests.cs
+- [X] T018 [P] [US2] Add a UI test covering list rendering and refresh after a successful add in frontend/RSSFeedReader.UI.Tests/SubscriptionsPageTests.cs
 
 ### Implementation for User Story 2
 
-- [ ] T019 [P] [US2] Return insertion-ordered subscription records from the API in backend/RSSFeedReader.Api/Controllers/SubscriptionsController.cs
-- [ ] T020 [US2] Render the subscription list and update it after each successful add in frontend/RSSFeedReader.UI/Pages/Subscriptions.razor
-- [ ] T021 [P] [US2] Show distinct list entries with a clear user-visible status message for success and rejected inputs in frontend/RSSFeedReader.UI/Pages/Subscriptions.razor
+- [X] T019 [P] [US2] Return insertion-ordered subscription records from the API in backend/RSSFeedReader.Api/Controllers/SubscriptionsController.cs
+- [X] T020 [US2] Render the subscription list and update it after each successful add in frontend/RSSFeedReader.UI/Pages/Subscriptions.razor
+- [X] T021 [P] [US2] Show distinct list entries with a clear user-visible status message for success and rejected inputs in frontend/RSSFeedReader.UI/Pages/Subscriptions.razor
 
 **Checkpoint**: User Story 2 is independently functional: the UI shows a stable, current subscription list on the page.
 
@@ -81,8 +81,8 @@
 
 ### Implementation for User Story 3
 
-- [ ] T022 [US3] Verify that the backend and frontend do not introduce feed-fetching, parsing, persistence, removal, or item-display logic in backend/RSSFeedReader.Api and frontend/RSSFeedReader.UI
-- [ ] T023 [P] [US3] Add a brief scope guardrail and validation note in specs/001-rss-reader-mvp/quickstart.md to confirm the app remains intentionally minimal
+- [X] T022 [US3] Verify that the backend and frontend do not introduce feed-fetching, parsing, persistence, removal, or item-display logic in backend/RSSFeedReader.Api and frontend/RSSFeedReader.UI
+- [X] T023 [P] [US3] Add a brief scope guardrail and validation note in specs/001-rss-reader-mvp/quickstart.md to confirm the app remains intentionally minimal
 
 **Checkpoint**: The MVP scope remains clearly bounded to subscription management and nothing beyond it.
 
@@ -92,10 +92,11 @@
 
 **Purpose**: Final validation, cleanup, and project hygiene for the delivery-ready MVP.
 
-- [ ] T024 [P] Run the backend unit and API validation suite in backend/RSSFeedReader.Api.Tests
-- [ ] T025 [P] Run the frontend build and browser validation workflow described in specs/001-rss-reader-mvp/quickstart.md
-- [ ] T026 Check routing, CORS, and appsettings alignment across backend/RSSFeedReader.Api/Program.cs and frontend/RSSFeedReader.UI/wwwroot/appsettings.json
-- [ ] T027 Remove template demo pages, default navigation, and unrelated sample content from frontend/RSSFeedReader.UI so the subscription page is the only primary experience
+- [X] T024 [P] Run the backend unit and API validation suite in backend/RSSFeedReader.Api.Tests
+- [X] T025 [P] Run the frontend build and browser validation workflow described in specs/001-rss-reader-mvp/quickstart.md
+- [X] T026 Check routing, CORS, and appsettings alignment across backend/RSSFeedReader.Api/Program.cs and frontend/RSSFeedReader.UI/wwwroot/appsettings.json
+- [X] T027 Remove template demo pages, default navigation, and unrelated sample content from frontend/RSSFeedReader.UI so the subscription page is the only primary experience
+
 
 ---
 

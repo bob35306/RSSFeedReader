@@ -1,0 +1,169 @@
+@page "/"
+@inject SubscriptionClient Client
+
+<PageTitle>Subscriptions | Fieldnotes</PageTitle>
+
+<div class="app-frame">
+    <header class="masthead">
+        <a class="wordmark" href="/" aria-label="Fieldnotes home">
+            <span class="wordmark-mark" aria-hidden="true">F</span>
+            <span>Fieldnotes</span>
+        </a>
+        <span class="masthead-note">A small home for your feeds</span>
+    </header>
+
+    <main>
+        <section class="page-heading" aria-labelledby="page-title">
+            <p class="eyebrow">YOUR READING LIST</p>
+            <h1 id="page-title">Subscriptions</h1>
+            <p class="intro">Keep the sources you care about, all in one place.</p>
+        </section>
+
+        <div class="workspace">
+            <section class="add-section" aria-labelledby="add-title">
+                <p class="section-index">01 <span>ADD A SOURCE</span></p>
+                <h2 id="add-title">Bring a feed in</h2>
+                <p class="section-copy">Paste an RSS or Atom address to save it to your list.</p>
+
+                <form @onsubmit="AddSubscriptionAsync" @onsubmit:preventDefault>
+                    <label for="feed-url">Feed URL</label>
+                    <div class="input-row">
+                        <input id="feed-url"
+                               type="url"
+                               inputmode="url"
+                               autocomplete="url"
+                               placeholder="https://example.com/feed.xml"
+                               aria-describedby="url-help feedback"
+                               @bind="Url" />
+                        <button type="submit" disabled="@IsSubmitting">
+                            @if (IsSubmitting)
+                            {
+                                <span>Adding...</span>
+                            }
+                            else
+                            {
+                                <span>Add feed</span>
+                                <span class="button-arrow" aria-hidden="true">+</span>
+                            }
+                        </button>
+                    </div>
+                    <p id="url-help" class="field-note">Use a complete http:// or https:// address.</p>
+                </form>
+
+                @if (!string.IsNullOrWhiteSpace(Feedback))
+                {
+                    <p id="feedback" class="feedback @(HasError ? "feedback-error" : "feedback-success")" role="status" aria-live="polite">
+                        <span class="feedback-mark" aria-hidden="true">@(HasError ? "!" : "✓")</span>
+                        @Feedback
+                    </p>
+                }
+            </section>
+
+            <section class="list-section" aria-labelledby="list-title">
+                <div class="list-heading">
+                    <div>
+                        <p class="section-index">02 <span>COLLECTION</span></p>
+                        <h2 id="list-title">Saved feeds</h2>
+                    </div>
+                    <span class="count">@FeedSubscriptions.Count.ToString("00")</span>
+                </div>
+
+                @if (IsLoading)
+                {
+                    <p class="list-state" role="status">Loading your subscriptions...</p>
+                }
+                else if (FeedSubscriptions.Count == 0)
+                {
+                    <div class="empty-state">
+                        <span class="empty-mark" aria-hidden="true">+</span>
+                        <p>No subscriptions yet</p>
+                        <span>Your saved feeds will appear here.</span>
+                    </div>
+                }
+                else
+                {
+                    <ol class="subscription-list">
+                        @foreach (var subscription in FeedSubscriptions)
+                        {
+                            <li @key="subscription.Id">
+                                <span class="feed-marker" aria-hidden="true"></span>
+                                <span class="feed-url">@subscription.Url</span>
+                                <time datetime="@subscription.CreatedAt.ToString("O")">@subscription.CreatedAt.ToLocalTime().ToString("MMM d, yyyy")</time>
+                            </li>
+                        }
+                    </ol>
+                }
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <span>Fieldnotes</span>
+        <span>Subscriptions stay in memory while the API is running.</span>
+    </footer>
+</div>
+
+@code {
+    private readonly List<SubscriptionResponse> FeedSubscriptions = [];
+    private string Url = string.Empty;
+    private string? Feedback;
+    private bool IsLoading = true;
+    private bool IsSubmitting;
+    private bool HasError;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            FeedSubscriptions.AddRange(await Client.GetAllAsync());
+        }
+        catch (HttpRequestException)
+        {
+            HasError = true;
+            Feedback = "Couldn't reach the subscription service. Check that the API is running.";
+        }
+        finally
+        {
+            IsLoading = false;
+        }
+    }
+
+    private async Task AddSubscriptionAsync()
+    {
+        var trimmedUrl = Url.Trim();
+        if (!Uri.TryCreate(trimmedUrl, UriKind.Absolute, out var uri) ||
+            (uri.Scheme != Uri.UriSchemeHttp && uri.Scheme != Uri.UriSchemeHttps) ||
+            string.IsNullOrWhiteSpace(uri.Host))
+        {
+            HasError = true;
+            Feedback = "Enter an absolute HTTP or HTTPS URL.";
+            return;
+        }
+
+        IsSubmitting = true;
+        Feedback = null;
+        try
+        {
+            await Client.AddAsync(trimmedUrl);
+            FeedSubscriptions.Clear();
+            FeedSubscriptions.AddRange(await Client.GetAllAsync());
+            Url = string.Empty;
+            HasError = false;
+            Feedback = "Subscription added.";
+        }
+        catch (SubscriptionClientException exception)
+        {
+            HasError = true;
+            Feedback = exception.Message;
+        }
+        catch (HttpRequestException)
+        {
+            HasError = true;
+            Feedback = "Couldn't reach the subscription service. Check that the API is running.";
+        }
+        finally
+        {
+            IsSubmitting = false;
+        }
+    }
+}

@@ -45,4 +45,10 @@
 - Before building the UI, remove template `Home.razor`, `Counter.razor`, and `Weather.razor`, remove their navigation links, and verify that only one page defines the `/` route.
 - In browser DevTools, verify there are no API connection, CORS, or ambiguous-route errors.
 
+## MVP scope guardrail
+
+The MVP supports only adding and listing process-local subscription URLs. It does not fetch or parse RSS/Atom documents, persist subscriptions, remove entries, or display feed items. Keep future reader behavior out of the API, UI, and dependencies until the next feature phase.
+
+Validation note: check this scope during review, then build and run the test suites and the add/list browser workflow above. The API must not make outbound requests to submitted feed URLs.
+
 See [data-model.md](data-model.md) and [contracts/subscriptions-api.md](contracts/subscriptions-api.md) for entity and endpoint details.

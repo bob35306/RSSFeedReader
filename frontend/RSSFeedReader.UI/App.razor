@@ -1,0 +1,14 @@
+<Router AppAssembly="typeof(Program).Assembly">
+    <Found Context="routeData">
+        <RouteView RouteData="routeData" />
+        <FocusOnNavigate RouteData="routeData" Selector="h1" />
+    </Found>
+    <NotFound>
+        <PageTitle>Page not found | Fieldnotes</PageTitle>
+        <main class="not-found">
+            <p class="eyebrow">FIELDNOTES / 404</p>
+            <h1>That page isn't here.</h1>
+            <a href="/">Return to subscriptions</a>
+        </main>
+    </NotFound>
+</Router>
